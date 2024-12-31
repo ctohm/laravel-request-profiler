@@ -1,0 +1,25 @@
+{
+    "name": "ctohm/laravel-request-profiler",
+    "description": "Prints request profiling to a file under storage/logs",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4.3||>=8",
+        "kint-php/kint": "^3.3",
+        "illuminate/support": "^8.32 || ^9.0 || ^10 || ^11"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CTOhm\\LaravelRequestProfiler\\Providers\\TimingsServiceProvider"
+            ]
+        },
+        "version": "0.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "CTOhm\\LaravelRequestProfiler\\": "src/"
+
+        },
+        "files":["src/dump.php"]
+    }
+}
