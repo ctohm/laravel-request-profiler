@@ -118,17 +118,12 @@ class MessageBag extends LaravelMessageBag
         if ($this->timings_processed || $request->isIgnoredPath() || !$this->enabled || !config('laravel-request-profiler.collect_timings')) return $this;
         $this->timings_processed = true;
 
-        return dispatch(
-            function () use ($request) {
+        $this->populatePretimings($request);
 
-                $this->populatePretimings($request);
-
-                $final_message = (string)PHP_EOL  . static::KINT_CYAN . $this->banner->implode(PHP_EOL) . PHP_EOL . $this->format_timings($request, $this->banner) . PHP_EOL . static::KINT_RESET;
-                $fp = \fopen(storage_path('logs/timings.txt'), 'ab');
-                \fwrite($fp, $final_message);
-                \fclose($fp);
-            }
-        )->afterResponse();
+        $final_message = (string)PHP_EOL  . static::KINT_CYAN . $this->banner->implode(PHP_EOL) . PHP_EOL . $this->format_timings($request, $this->banner) . PHP_EOL . static::KINT_RESET;
+        $fp = \fopen(storage_path('logs/timings.txt'), 'ab');
+        \fwrite($fp, $final_message);
+        \fclose($fp);
     }
     private $max_characters = 0;
     private $max_since_start = 0;
